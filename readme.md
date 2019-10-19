@@ -7,6 +7,7 @@ Uses Ansible to create configured Vagrant folders/files with local-only SSH keys
 ## Prerequisites
 
 Ansible 2.8+
+
 Vagrant
 
 ## Instructions
@@ -28,7 +29,7 @@ cd ../vagrant
 vagrant up
 ```
 
-`vagrant up` will run a short shell script to add the SSH key to the `vagrant user`. 
+`vagrant up` will run a short shell script to add the SSH key to the `vagrant` user. 
 
 You can now run Ansible against the Vagrant boxes. Add any roles or tasks to `vagrant-playbook.yml`. 
 
