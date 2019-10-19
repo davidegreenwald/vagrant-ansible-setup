@@ -1,0 +1,17 @@
+---
+  # this folder is for both Ansible and Vagrant use
+  ssh_folder: "vagrant_ssh"
+
+# use dicts to create as many Vagrant boxes as you want
+# use different private IPs
+  vagrant:
+    folder: "vagrant"
+    vagrant_box: "Centos/7"
+    vagrant_private_ip: "192.168.10.30"
+
+# make more boxes if wanted:
+# 
+#  vagrant2:
+#    folder: "vagrant2"
+#    vagrant_box: "Centos/7" 
+#    vagrant_private_ip: "192.168.10.31" 

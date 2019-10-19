@@ -1,0 +1,45 @@
+---
+  - name: Create Vagrant folders
+    file: 
+      path: "../{{ item.folder }}"
+      state: directory
+    with_items:
+      - "{{ vagrant }}"
+
+  - name: Create Vagrantfiles
+    template:     
+      src: "Vagrantfile.j2"
+      dest: "../{{ item.folder }}/Vagrantfile"
+    with_items:
+      - "{{ vagrant }}"
+
+  - name: Create SSH keys folders for Ansible and Vagrant
+    file: 
+      path: "{{ item }}"
+      state: directory
+    with_items:
+      # Ansible local folder
+      - "{{ ssh_folder }}"
+      # Add Vagrant folders here
+      - "../{{ vagrant.folder}}/{{ ssh_folder }}"
+       
+  - name: Create project SSH key
+    openssh_keypair:     
+      path: "{{ ssh_folder }}/vagrant_rsa"
+  
+  - name: Copy public key to all Vagrant folders
+    copy: 
+      src: "{{ ssh_folder }}/vagrant_rsa.pub"
+      dest: "../{{ item.folder }}/{{ ssh_folder }}"
+    with_items:
+      - "{{ vagrant }}"
+
+  # Make sure there is a newline to print on in the inventory file or this will break
+  - name: Update Ansible inventory with Vagrant IPs
+    lineinfile: 
+      path: "inventory/inventory.ini"
+      insertafter: "[vagrant]"
+      line: "{{ item }}"
+      create: yes
+    with_items: 
+      - "{{ vagrant.vagrant_private_ip }} ansible_user=vagrant ansible_ssh_private_key_file={{ ssh_folder }}/vagrant_rsa ansible_ssh_common_args='-o StrictHostKeyChecking=no'"
