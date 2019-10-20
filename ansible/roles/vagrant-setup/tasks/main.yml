@@ -39,7 +39,7 @@
     lineinfile: 
       path: "inventory/inventory.ini"
       insertafter: "[vagrant]"
-      line: "{{ item }}"
+      line: "{{ item.vagrant_private_ip }} ansible_user=vagrant ansible_ssh_private_key_file={{ ssh_folder }}/vagrant_rsa ansible_ssh_common_args='-o StrictHostKeyChecking=no'"
       create: yes
     with_items: 
-      - "{{ vagrant.vagrant_private_ip }} ansible_user=vagrant ansible_ssh_private_key_file={{ ssh_folder }}/vagrant_rsa ansible_ssh_common_args='-o StrictHostKeyChecking=no'"
+      - "{{ vagrant }}"
