@@ -4,6 +4,10 @@
 
 Uses Ansible to create configured Vagrant folders/files with local-only SSH keys for Ansible to then provision for local development, as if they were standard remote machines.
 
+### See an example 
+
+Check out the **example-output** branch to see a finished playbook build.
+
 ## Prerequisites
 
 Ansible 2.8+
@@ -40,4 +44,8 @@ Example:
 ```
 ssh -i ansible/vagrant_ssh/vagrant_rsa vagrant@192.168.10.30
 ```
+
+## Warning
+
+Don't save SSH keys in version control *ever*. Generate these keys strictly for local ease of use.
 
